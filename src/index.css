@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+@layer theme {
+  :root {
+    --font-sans: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    
+    /* Light Mode Tokens */
+    --color-background: #ffffff;
+    --color-foreground: #09090b;
+    --color-card: #ffffff;
+    --color-card-foreground: #09090b;
+    --color-popover: #ffffff;
+    --color-popover-foreground: #09090b;
+    --color-primary: #18181b;
+    --color-primary-foreground: #fafafa;
+    --color-secondary: #f4f4f5;
+    --color-secondary-foreground: #18181b;
+    --color-muted: #f4f4f5;
+    --color-muted-foreground: #71717a;
+    --color-accent: #f4f4f5;
+    --color-accent-foreground: #18181b;
+    --color-destructive: #ef4444;
+    --color-border: rgba(0, 0, 0, 0.1);
+    --color-input: rgba(0, 0, 0, 0.1);
+    --color-ring: #18181b;
+    
+    /* Glassmorphism Light Tokens */
+    --glass-bg: rgba(255, 255, 255, 0.72);
+    --glass-border: rgba(255, 255, 255, 0.35);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+  }
+
+  .dark {
+    /* Dark Mode Tokens */
+    --color-background: #0e1014;
+    --color-foreground: #fafafa;
+    --color-card: #181b20;
+    --color-card-foreground: #fafafa;
+    --color-popover: #181b20;
+    --color-popover-foreground: #fafafa;
+    --color-primary: #fafafa;
+    --color-primary-foreground: #18181b;
+    --color-secondary: #27272a;
+    --color-secondary-foreground: #fafafa;
+    --color-muted: #27272a;
+    --color-muted-foreground: #a1a1aa;
+    --color-accent: #27272a;
+    --color-accent-foreground: #fafafa;
+    --color-destructive: #7f1d1d;
+    --color-border: rgba(255, 255, 255, 0.12);
+    --color-input: rgba(255, 255, 255, 0.15);
+    --color-ring: #d4d4d8;
+
+    /* Glassmorphism Dark Tokens */
+    --glass-bg: rgba(14, 16, 20, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.15);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  }
+}
+
+/* Base resets & touch friendliness */
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: fixed;
+  font-family: var(--font-sans);
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Custom Scrollbar for desktop */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Safe area padding utilities */
+.pt-safe {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.pl-safe {
+  padding-left: env(safe-area-inset-left, 0px);
+}
+.pr-safe {
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* MapLibre Canvas fill */
+.maplibregl-map {
+  font-family: var(--font-sans) !important;
+}
+
+.maplibregl-ctrl-bottom-right, .maplibregl-ctrl-bottom-left {
+  display: none !important;
+}
+
+/* ==========================================================================
+   View Transitions API & Mobile Routing Animations
+   ========================================================================== */
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 280ms;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* iOS/Android Slide & Zoom Animations */
+@keyframes slide-to-left {
+  to { transform: translateX(-100%); opacity: 0; }
+}
+@keyframes slide-from-right {
+  from { transform: translateX(100%); opacity: 0; }
+}
+@keyframes slide-to-right {
+  to { transform: translateX(100%); opacity: 0; }
+}
+@keyframes slide-from-left {
+  from { transform: translateX(-100%); opacity: 0; }
+}
+
+@keyframes slide-up-in {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes slide-down-out {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(100%); opacity: 0; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fade-out {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+::view-transition-old(nav-forward) {
+  animation: 260ms cubic-bezier(0.16, 1, 0.3, 1) both slide-to-left;
+}
+::view-transition-new(nav-forward) {
+  animation: 260ms cubic-bezier(0.16, 1, 0.3, 1) both slide-from-right;
+}
+
+::view-transition-old(nav-back) {
+  animation: 260ms cubic-bezier(0.16, 1, 0.3, 1) both slide-to-right;
+}
+::view-transition-new(nav-back) {
+  animation: 260ms cubic-bezier(0.16, 1, 0.3, 1) both slide-from-left;
+}
+
+::view-transition-old(modal-reveal) {
+  animation: 200ms cubic-bezier(0.16, 1, 0.3, 1) both fade-out;
+}
+::view-transition-new(modal-reveal) {
+  animation: 260ms cubic-bezier(0.16, 1, 0.3, 1) both slide-up-in;
+}
+
+/* Accessibility Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
